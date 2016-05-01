@@ -11,8 +11,8 @@ import data_utils
 
 if __name__ == '__main__':
     batch_size = 32
-    nb_classes = 10
-    nb_epoch = 5
+    nb_classes = 20
+    nb_epoch = 1
     data_augmentation = False
 
     # input image dimensions
@@ -21,14 +21,17 @@ if __name__ == '__main__':
     img_channels = 3
 
     # the data, shuffled and split between train and test sets
-    (X_train, y_train), (X_test, y_test) = data_utils.load_CIFAR100("dataset/cifar-100-python/")
+    (X_train, y_train,X_test, y_test) = data_utils.load_CIFAR100("dataset/cifar-100-python/")
     print('X_train shape:', X_train.shape)
+    print('y_train shape:', y_train.shape)
     print(X_train.shape[0], 'train samples')
     print(X_test.shape[0], 'test samples')
 
     # convert class vectors to binary class matrices
     Y_train = np_utils.to_categorical(y_train, nb_classes)
     Y_test = np_utils.to_categorical(y_test, nb_classes)
+    print('X_train shape:', X_train.shape)
+    print('y_train shape:', y_train.shape)
 
     model = Sequential()
 
