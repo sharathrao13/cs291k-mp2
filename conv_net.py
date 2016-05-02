@@ -12,7 +12,7 @@ import data_utils
 if __name__ == '__main__':
     batch_size = 32
     nb_classes = 20
-    nb_epoch = 1
+    nb_epoch = 10
     data_augmentation = False
 
     # input image dimensions
@@ -23,12 +23,12 @@ if __name__ == '__main__':
     # the data, shuffled and split between train and test sets
     (X_train, y_train,X_test, y_test) = data_utils.load_CIFAR100("dataset/cifar-100-python/")#cifar10.load_data()
 
-    X_val = X_train[49000:50000,:,:,:]
-    y_val = y_train[49000:50000]
-    X_train = X_train[0:49000,:,:,:]
-    y_train = y_train[0:49000]
-    X_test = X_test[0:1000,:,:,:]
-    y_test = y_test[0:1000]
+    X_val = X_train[49000:49100,:,:,:]
+    y_val = y_train[49000:49100]
+    X_train = X_train[0:4900,:,:,:]
+    y_train = y_train[0:4900]
+    X_test = X_test[0:100,:,:,:]
+    y_test = y_test[0:100]
 
 
     print('X_train shape:', X_train.shape)
