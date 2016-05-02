@@ -21,14 +21,26 @@ if __name__ == '__main__':
     img_channels = 3
 
     # the data, shuffled and split between train and test sets
-    (X_train, y_train,X_test, y_test) = data_utils.load_CIFAR100("dataset/cifar-100-python/")
+    (X_train, y_train,X_test, y_test) = data_utils.load_CIFAR100("dataset/cifar-100-python/")#cifar10.load_data()
+
+    X_val = X_train[49000:50000,:,:,:]
+    y_val = y_train[49000:50000]
+    X_train = X_train[0:49000,:,:,:]
+    y_train = y_train[0:49000]
+    X_test = X_test[0:1000,:,:,:]
+    y_test = y_test[0:1000]
+
+
     print('X_train shape:', X_train.shape)
     print('y_train shape:', y_train.shape)
+    print('X_val shape:', X_val.shape)
+    print('y_val shape:', y_val.shape)
     print(X_train.shape[0], 'train samples')
     print(X_test.shape[0], 'test samples')
 
     # convert class vectors to binary class matrices
     Y_train = np_utils.to_categorical(y_train, nb_classes)
+    Y_val = np_utils.to_categorical(y_val, nb_classes)
     Y_test = np_utils.to_categorical(y_test, nb_classes)
     print('X_train shape:', X_train.shape)
     print('y_train shape:', y_train.shape)
@@ -64,14 +76,16 @@ if __name__ == '__main__':
                   metrics=['accuracy'])
 
     X_train = X_train.astype('float32')
+    X_val = X_val.astype('float32')
     X_test = X_test.astype('float32')
     X_train /= 255
     X_test /= 255
+    X_val /=255
 
     model.fit(X_train, Y_train,
                   batch_size=batch_size,
                   nb_epoch=nb_epoch,
-                  validation_data=(X_test, Y_test),
+                  validation_data=(X_val, Y_val),
                   shuffle=True)
 
     loss, accuracy = model.evaluate(X_test, Y_test, show_accuracy=True)
