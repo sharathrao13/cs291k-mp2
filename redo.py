@@ -19,7 +19,7 @@ if __name__ == '__main__':
     print("****Please note that Keras/Theano prints the Training Loss and Training Accuracy as loss and acc ****")
     batch_size = 32
     nb_classes = 20
-    nb_epoch = 5 #This will take 10 hours approximately
+    nb_epoch = 5 #This will take 6 hours approximately
 
     img_rows, img_cols = 32, 32
     img_channels = 3
@@ -55,9 +55,9 @@ if __name__ == '__main__':
     model.add(Dense(nb_classes))
     model.add(Activation('softmax'))
 
-    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.95, nesterov=True)
+    ada =Adagrad(lr=0.01, epsilon=1e-06)
     model.compile(loss='categorical_crossentropy',
-                  optimizer=sgd,
+                  optimizer=ada,
                   metrics=['accuracy'])
 
     X_train = X_train.astype('float32')
