@@ -55,10 +55,9 @@ if __name__ == '__main__':
     model.add(Dense(nb_classes))
     model.add(Activation('softmax'))
 
-    #sgd = SGD(lr=0.01, decay=1e-6, momentum=0.95, nesterov=True)
-    ada =Adagrad(lr=0.01, epsilon=1e-06)
+    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.95, nesterov=True)
     model.compile(loss='categorical_crossentropy',
-                  optimizer=ada,
+                  optimizer=sgd,
                   metrics=['accuracy'])
 
     X_train = X_train.astype('float32')
