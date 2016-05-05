@@ -11,15 +11,11 @@ if __name__ == '__main__':
     batch_size = 32
     nb_classes = 20
     nb_epoch = 10
-    data_augmentation = False
 
-    # input image dimensions
     img_rows, img_cols = 32, 32
-    # the CIFAR10 images are RGB
     img_channels = 3
 
-    # the data, shuffled and split between train and test sets
-    (X_train, y_train,X_test, y_test) = data_utils.load_CIFAR100("dataset/cifar-100-python/")#cifar10.load_data()
+    (X_train, y_train,X_test, y_test) = data_utils.load_CIFAR100("dataset/cifar-100-python/")
 
     X_val = X_train[49000:50000,:,:,:]
     y_val = y_train[49000:50000]
@@ -29,19 +25,9 @@ if __name__ == '__main__':
     y_test = y_test[0:10000]
 
 
-    print('X_train shape:', X_train.shape)
-    print('y_train shape:', y_train.shape)
-    print('X_val shape:', X_val.shape)
-    print('y_val shape:', y_val.shape)
-    print(X_train.shape[0], 'train samples')
-    print(X_test.shape[0], 'test samples')
-
-    # convert class vectors to binary class matrices
     Y_train = np_utils.to_categorical(y_train, nb_classes)
     Y_val = np_utils.to_categorical(y_val, nb_classes)
     Y_test = np_utils.to_categorical(y_test, nb_classes)
-    print('X_train shape:', X_train.shape)
-    print('y_train shape:', y_train.shape)
 
     model = Sequential()
 
@@ -67,7 +53,6 @@ if __name__ == '__main__':
     model.add(Dense(nb_classes))
     model.add(Activation('softmax'))
 
-    # let's train the model using SGD + momentum (how original).
     sgd = SGD(lr=0.01, decay=1e-6, momentum=0.95, nesterov=True)
     model.compile(loss='categorical_crossentropy',
                   optimizer=sgd,

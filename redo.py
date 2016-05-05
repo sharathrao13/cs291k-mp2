@@ -4,7 +4,7 @@ from __future__ import print_function
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution2D, MaxPooling2D
-from keras.optimizers import SGD
+from keras.optimizers import Adagrad
 from keras.utils import np_utils
 import sys
 import data_utils
@@ -16,10 +16,10 @@ if __name__ == '__main__':
     file_location = sys.argv[1]+"/cifar-100-python"
     print(file_location)
 
-    print("****Please note that Keras/Theano prints the Training Loss and Training Accuracy as loss and accuracy****")
+    print("****Please note that Keras/Theano prints the Training Loss and Training Accuracy as loss and acc ****")
     batch_size = 32
     nb_classes = 20
-    nb_epoch = 10 #This will take 10 hours approximately
+    nb_epoch = 5 #This will take 10 hours approximately
 
     img_rows, img_cols = 32, 32
     img_channels = 3
@@ -40,10 +40,10 @@ if __name__ == '__main__':
 
     model = Sequential()
 
-    model.add(Convolution2D(64, 3, 3, border_mode='same',
+    model.add(Convolution2D(32, 3, 3, border_mode='same',
                             input_shape=(img_channels, img_rows, img_cols)))
     model.add(Activation('relu'))
-    model.add(Convolution2D(64, 3, 3))
+    model.add(Convolution2D(32, 3, 3))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
@@ -55,9 +55,10 @@ if __name__ == '__main__':
     model.add(Dense(nb_classes))
     model.add(Activation('softmax'))
 
-    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.95, nesterov=True)
+    #sgd = SGD(lr=0.01, decay=1e-6, momentum=0.95, nesterov=True)
+    ada =Adagrad(lr=0.01, epsilon=1e-06)
     model.compile(loss='categorical_crossentropy',
-                  optimizer=sgd,
+                  optimizer=ada,
                   metrics=['accuracy'])
 
     X_train = X_train.astype('float32')
